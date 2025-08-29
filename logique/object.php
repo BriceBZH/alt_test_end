@@ -21,27 +21,82 @@ echo "<br /><br /><br />";
 //Écrivez une fonction qui transforme les valeurs d'un objet
 
 
+function transformValues(array $euros, callable $convert): array {
+    $tab = [];
+    foreach($euros as $article => $euro) {
+        $tab[$article] = $convert($euro);
+    }
+    return $tab;
+}
+$pricesInEuros = [
+    "book" => 20,
+    "pen" => 5,
+    "notebook" => 10
+];
+$toDollars = function($euros) { return $euros * 1.1; };
+print_r(transformValues($pricesInEuros, $toDollars));
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui fusionne deux objets en sommant les valeurs numériques communes
 
-
+function mergeObjects(array $tab1, array $tab2) : array {
+    $tab = [];
+    foreach($tab1 as $month => $sold) {
+        $tab[$month] = $sold + $tab2[$month];
+    }
+    return $tab;
+}
+$store1Sales = [
+    "january" => 1000,
+    "february" => 1200,
+    "march" => 900
+];
+$store2Sales = [
+    "january" => 800,
+    "february" => 950,
+    "march" => 1100
+];
+print_r(mergeObjects($store1Sales, $store2Sales));
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui filtre un objet selon une condition sur les valeurs
 
+function filterObject(array $inventory, callable $valeur) {
+    return array_filter($inventory, $valeur);
+}
+$inventory = [
+    "laptop" => 0,
+    "smartphone" => 5,
+    "tablet" => 0,
+    "headphones" => 8
+];
+print_r(filterObject($inventory, function($stock) { return $stock === 0; }));
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui convertit un objet plat en objet imbriqué en utilisant les points comme séparateurs
 
+// function flatToNested($flatConfig) {
+
+// }
+// $flatConfig = [
+//     'app.name' => 'MyApp',
+//     'app.version' => '1.0.0',
+//     'database.host' => 'localhost',
+//     'database.port' => 5432
+// ];
+// print_r(flatToNested($flatConfig));
+
 echo "<br /><br /><br />";
 //Écrivez une fonction qui trouve les clés d'un objet ayant une valeur spécifique
 
-function findKeysByValue(array $tab, int $key) {
+function findKeysByValue(array $tab, int $key) : array {
     $fin = [];
     foreach($tab as $val => $clef) {
-        echo $val." ".$clef."<br />";
+        if($clef == $key) {
+            $fin[] = $val;
+        }
     }
+    return $fin;
 }
 $productStock = [
     "laptop" => 0,
@@ -50,20 +105,59 @@ $productStock = [
     "monitor" => 3
 ];
 print_r(findKeysByValue($productStock, 0));
-// ["laptop", "keyboard"]
 
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui crée un objet à partir de deux tableaux
 
+function createObjectFromArrays(array $players, array $scores) : array {
+    $tab = [];
+    foreach($players as $index => $player) {
+        $tab[$player] = $scores[$index];
+    }
+    return $tab;
+}
+$playerNames = ["Alice", "Bob", "Charlie"];
+$scores = [100, 85, 90];
+print_r(createObjectFromArrays($playerNames, $scores));
 
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui compte les occurrences de valeurs dans un objet
 
+function countValues(array $order) : array {
+    return array_count_values($order);
+}
+$orderStatuses = [
+    "order1" => "pending",
+    "order2" => "delivered",
+    "order3" => "pending",
+    "order4" => "cancelled",
+    "order5" => "pending"
+];
+print_r(countValues($orderStatuses));
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui extrait certaines propriétés d'un objet
+
+function extractProperties($userProfile, $publicInfo) {
+    $tab = [];
+    foreach($publicInfo as $info) {
+        if(array_key_exists($info, $userProfile)) {
+            $tab[$info] = $userProfile[$info];
+        }
+    }
+    return $tab;
+}
+$userProfile = [
+    "name" => "Jean Martin",
+    "email" => "jean@email.com",
+    "password" => "secret123",
+    "age" => 35,
+    "address" => "123 rue Principal"
+];
+$publicInfo = ["name", "age"];
+print_r(extractProperties($userProfile, $publicInfo));
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui trie les propriétés d'un objet par valeur
