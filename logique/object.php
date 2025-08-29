@@ -167,6 +167,20 @@ echo "<br /><br /><br />";
 echo "<br /><br /><br />";
 //Écrivez une fonction qui créé un objet à partir d'un tableau de paires clé-valeur
 
+function createObjectFromPairs(array $productPairs) : array {
+    $tab = [];
+    foreach($productPairs as $val) {
+        $tab[$val[0]] = $val[1];
+    }
+    return $tab;
+}
+$productPairs = [
+    ["pommes", 2.5],
+    ["bananes", 1.8],
+    ["oranges", 2.2]
+];
+print_r(createObjectFromPairs($productPairs));
+
 echo "<br /><br /><br />";
 //Écrivez une fonction qui recherche une valeur dans un objet imbriqué
 echo "<br /><br /><br />";
@@ -177,5 +191,52 @@ echo "<br /><br /><br />";
 //Écrivez une fonction qui compare les modifications entre deux objets
 echo "<br /><br /><br />";
 //Écrivez une fonction qui convertit un objet en chaîne de paramètres d'URL
+
+function objectToUrlParams(array $searchParams) : string {
+    $fn = "";
+    $nbCaract = 0;
+    foreach($searchParams as $info => $val) {
+        $fn .= $info."=".rawurlencode($val)."&";
+    }
+    $nbCaract = strlen($fn) - 1;
+    return substr($fn, 0, $nbCaract);
+}
+$searchParams = [
+    "query" => "ordinateur portable",
+    "maxPrice" => 1000,
+    "brand" => "Dell",
+    "inStock" => true
+];
+echo objectToUrlParams($searchParams);
+
 echo "<br /><br /><br />";
 //Écrivez une fonction qui génère un résumé statistique d'un objet contenant des nombres
+
+function getObjectStats(array $monthlyRevenues) : array {
+    $vals = array_values($monthlyRevenues);
+    $total = array_sum($vals);
+    $min = min($vals);
+    $max = max($vals);
+    $average = $total / count($vals);
+
+    return [
+        "basic" => [
+            "min" => $min,
+            "max" => $max,
+            "average" => $average,
+            "total" => $total
+        ],
+        "advanced" => [
+            "median" => "",
+            "variance" => "",
+            "standardDeviation" => ""
+        ]
+    ];
+}
+$monthlyRevenues = [
+    "january" => 1000,
+    "february" => 1200,
+    "march" => 900,
+    "april" => 1500
+];
+print_r(getObjectStats($monthlyRevenues));

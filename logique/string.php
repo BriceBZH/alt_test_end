@@ -106,13 +106,19 @@ echo altMinMaj($chaine);
 echo "<br /><br /><br />";
 //Écrivez une fonction qui supprime les caractères en double consécutifs
 
-// $messageUtilisateur = "Bonjouuuur !!! J'ai besoiiiin d'aide....";
-// function removeDuplicates($messageUtilisateur) {
-
-//     return 
-// }
-
-// echo "Message normalisé : " . $messageNettoye;
+function removeDuplicates(string $messageUtilisateur) : string {
+    $phrase = '';
+    for($i=0;$i<strlen($messageUtilisateur);$i++) {
+        $val = substr($phrase, -1);
+        if($messageUtilisateur[$i] !== $val) {
+            $phrase .= $messageUtilisateur[$i];
+        }
+    }
+    return $phrase;
+} 
+$messageUtilisateur = "Bonjouuuur !!! J'ai besoiiiin d'aide....";
+$messageNettoye = removeDuplicates($messageUtilisateur);
+echo "Message normalisé : " . $messageNettoye;
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui extrait les initiales d'un nom complet
@@ -131,11 +137,12 @@ echo returnInitiale("brice rubeaux");
 echo "<br /><br /><br />";
 //Écrivez une fonction qui masque les caractères d'une chaîne sauf les N derniers
 
-// $cardNumber = "1234567890123456";
-// function maskString(string $cardNumber, int $visible) : string {
-//     return substr($cardNumber, 4, -1);
-// }
-// echo maskString($cardNumber, 4);
+$cardNumber = "1234567890123456";
+function maskString(string $cardNumber, int $visible) : string {
+    $val = $visible * -1;
+    return substr($cardNumber, $val);
+}
+echo maskString($cardNumber, 4);
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui vérifie si une chaîne est un palindrome
@@ -155,6 +162,30 @@ var_dump(isPalindrome($slogan)); // bool(true)
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui trouve la plus longue séquence de caractères identiques
+
+function longestSequence(string $input) : string {
+    $maxLettre = '';
+    $maxNb = 0;
+
+    $lettre = '';
+    $lettreNb = 0;
+    for($i=0;$i<strlen($input);$i++) {
+        if($input[$i] === $lettre) {
+            $lettreNb++;
+        } else {
+            $lettre = $input[$i];
+            $lettreNb = 1;
+        }
+
+        if($lettreNb > $maxNb) {
+            $maxNb = $lettreNb;
+            $maxLettre = $lettre;
+        }
+    }
+    return str_repeat($maxLettre, $maxNb);
+} 
+$input = "aaabbbbbcccc";
+echo longestSequence($input); 
 
 echo "<br /><br /><br />";
 //Écrivez une fonction qui formate un texte en ajoutant des points de suspension

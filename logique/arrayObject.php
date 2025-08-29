@@ -44,7 +44,21 @@ echo "<br /><br /><br />";
 //Écrivez une fonction qui trouve l'intersection entre deux tableaux d'objets selon une propriété donnée
 
 function findIntersection(array $library1, array $library2, string $val) : array {
-    
+    $tab = [];    
+    $lib1 = array_column($library1, $val);
+    $lib2 = array_column($library2, $val);
+    $inter = array_intersect($lib1, $lib2);
+    foreach($library1 as $item1) {
+        if(in_array($item1[$val], $inter)) {
+            $tab[] = $item1;
+        }
+    }
+    foreach($library2 as $item2) {
+        if(in_array($item2[$val], $inter)) {
+            $tab[] = $item2;
+        }
+    }
+    return $tab;
 }
 $library1 = [
     ["id" => 1, "title" => "1984", "author" => "Orwell", "available" => true],
